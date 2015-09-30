@@ -1,3 +1,10 @@
+/*
+*	Заливка и отсечение
+*	Лопатин Виктор, группа БПИ121
+*	Среда разработки MS VS 2013
+*	2015
+*/
+
 #pragma once
 
 #include "Line.h"
@@ -118,6 +125,7 @@ namespace FloodFilling {
 			this->AboutMenuItem->Name = L"AboutMenuItem";
 			this->AboutMenuItem->Size = System::Drawing::Size(94, 20);
 			this->AboutMenuItem->Text = L"О программе";
+			this->AboutMenuItem->Click += gcnew System::EventHandler(this, &FillForm::AboutMenuItem_Click);
 			// 
 			// LoadMenuItem
 			// 
@@ -293,6 +301,29 @@ private: System::Void Workspace_MouseClick(System::Object^  sender, System::Wind
 					 prevPoint = e->Location;
 					 inProcess = true;
 				 }
+				 break;
+			 case SLICE:
+				 if (inProcess)
+				 {
+					 Slice(prevPoint, e->Location);
+					 inProcess = false;
+					 Workspace->Image = gcnew Bitmap(Workspace->Width, Workspace->Height);
+					 Image^ image = Workspace->Image;
+					 Graphics^ g = Graphics::FromImage(image);
+					 Pen^ pen = Pens::Goldenrod;
+					 int xl = Math::Min(prevPoint.X, e->Location.X);
+					 int xr = Math::Max(prevPoint.X, e->Location.X);
+					 int yt = Math::Min(prevPoint.Y, e->Location.Y);
+					 int yb = Math::Max(prevPoint.Y, e->Location.Y);
+					 g->DrawRectangle(pen, xl, yt, xr - xl, yb - yt);
+					 Workspace->Image = image;
+					 DrawLines();
+				 }
+				 else
+				 {
+					 prevPoint = e->Location;
+					 inProcess = true;
+				 }
 			 }
 }
 
@@ -388,6 +419,38 @@ private: System::Void ColorButton_Click(System::Object^  sender, System::EventAr
 			 }
 }
 
+private: System::Void Slice(Point first, Point second)
+{
+
+			 int xl = Math::Min(first.X, second.X);
+			 int xr = Math::Max(first.X, second.X);
+			 int yt = Math::Min(first.Y, second.Y);
+			 int yb = Math::Max(first.Y, second.Y);
+			 for (int i = 0; i < lines->Count; i++)
+			 {
+				 Line^ line = lines[i];
+				 int code1 = 0;
+				 if (line->Start().X < xl) code1 = code1 | 1;
+				 if (line->Start().X > xr) code1 = code1 | 2;
+				 if (line->Start().Y < yt) code1 = code1 | 4;
+				 if (line->Start().Y > yb) code1 = code1 | 8;
+				 int code2 = 0;
+				 if (line->Finish().X < xl) code2 = code2 | 1;
+				 if (line->Finish().X > xr) code2 = code2 | 2;
+				 if (line->Finish().Y < yt) code2 = code2 | 4;
+				 if (line->Finish().Y > yb) code2 = code2 | 8;
+
+				 Point newStart = line->Start();
+				 Point newFinish = line->Finish();
+				 if (code1 == 0 && code2 == 0) continue;
+				 if ((code1 & code2) > 0)
+				 {
+					 lines->RemoveAt(i);
+					 i--;
+				 }
+			 }
+}
+
 private: System::Void DrawLines()
 {
 			 Image^ image = Workspace->Image;
@@ -399,6 +462,14 @@ private: System::Void DrawLines()
 				 g->DrawLine(pen, line->Start(), line->Finish());
 			 }
 			 Workspace->Image = image;
+}
+private: System::Void AboutMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 String^ message = "Заливка и отсечение \n Виктор Лопатин, группа БПИ121 \n\n Управление: Используйте радио-группу слева для выбора "+
+				 "функции. \nРеализованы построчная и обычная заливки с затравкой. Загрузите изображение при помощи кнопки сверху, чтобы залить его."+
+				 "\nИспользуйте рисование отрезков для создания заливаемых фигур или отрезков для отсечения. Выбирайте цвет при помощи соответствующей кнопки"+
+				 "\nРисование отрезков и области отсечения производится отмечанием мышью двух точек - концов отрезка или углов прямоугольника\n\n2015 год";
+			 String^ title = "О программе";
+			 MessageBox::Show(this, message, title, MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 };
 }
