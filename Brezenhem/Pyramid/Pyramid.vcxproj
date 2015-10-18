@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D1BA4F72-744F-46D6-AAE6-7626BA5300A6}</ProjectGuid>
+    <ProjectGuid>{0B118C8C-415B-4DB3-AF0B-13818AC8724F}</ProjectGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>Brezenhem</RootNamespace>
+    <RootNamespace>Pyramid</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,18 +76,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Point3d.cpp" />
+    <ClCompile Include="Tetraedr.cpp" />
+    <ClCompile Include="PyramidForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ControlPoints.h" />
-    <ClInclude Include="MyForm.h">
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Point3d.h" />
+    <ClInclude Include="Tetraedr.h" />
+    <ClInclude Include="PyramidForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MyForm.resx">
-      <DependentUpon>MyForm.h</DependentUpon>
+    <EmbeddedResource Include="PyramidForm.resx">
+      <DependentUpon>PyramidForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -447,7 +447,9 @@ private: System::Void Slice(Point first, Point second)
 				 {
 					 lines->RemoveAt(i);
 					 i--;
+					 continue;
 				 }
+
 			 }
 }
 

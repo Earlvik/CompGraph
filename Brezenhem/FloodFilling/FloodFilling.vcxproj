@@ -76,18 +76,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FillForm.cpp" />
-    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="BezierForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FillForm.h">
+    <ClInclude Include="BezierForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Line.h" />
+    <ClInclude Include="ControlPoints.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FillForm.resx">
-      <DependentUpon>FillForm.h</DependentUpon>
+    <EmbeddedResource Include="BezierForm.resx">
+      <DependentUpon>BezierForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
